@@ -17,36 +17,33 @@ class ShiftSyncBot:
         
         # 1. Functional Queries (Working with DF)
         if df is not None and not df.empty:
-            if "attendance" in query or "many employees" in query or "total" in query:
+            # Attendance & Headcount (with typos)
+            if any(k in query for k in ["attendance", "toady", "today", "how many", "total", "count"]):
                 count = len(df)
                 depts = df['Department'].nunique()
-                return f"📋 **Minion's Report**: There are currently **{count}** employees registered in the system across **{depts}** departments."
+                return f"📋 **Minion's Report**: Bello! There are currently **{count}** employees registered in the system across **{depts}** departments. Everything looks good for today!"
 
-            if "roster" in query or "plan" in query or "optimized" in query:
+            # Roster & Optimization (with typos)
+            if any(k in query for k in ["roster", "roaster", "plan", "optimized", "schedule", "shift"]):
                 high_fatigue = len(df[df['Fatigue_Score'] > 75])
-                return f"📅 **Minion's Roster Summary**: I have processed the optimization. **{high_fatigue}** employees are flagged for fatigue-induced shift rotation. You can view the full detailed list in the **Optimization** tab."
+                return f"📅 **Minion's Roster Summary**: I've analyzed the roaster plan! **{high_fatigue}** employees are flagged for fatigue-induced shift rotation. You can see the full plan in the **Optimization** tab!"
 
-            if "pdf" in query or "excel" in query or "convert" in query or "export" in query:
-                return "📄 **Minion's Export Engine**: I've prepared the data for export. You can find the **'Download PDF Report'** button in the **Overview** or **Optimization** section to get the official document."
+            # Export & PDF (with typos)
+            if any(k in query for k in ["pdf", "ecel", "excel", "convert", "export", "download", "print"]):
+                return "📄 **Minion's Export Engine**: Poopaye! I can help with that. You can find the **'Download PDF Report'** button in the **Overview** or **Optimization** section. I'll convert everything for you!"
 
         # 2. Knowledge Base Queries
         for key in self.knowledge_base:
             if key in query:
                 return self.knowledge_base[key]
         
-        # Keyword-based heuristics
-        if "fatigue" in query:
-            return self.knowledge_base["what is fatigue score"]
-        if "attrition" in query or "leave" in query:
-            return self.knowledge_base["how to reduce attrition"]
-        if "model" in query or "ai" in query or "algorithm" in query:
-            return self.knowledge_base["what is random forest"]
-        if "shift" in query or "optimize" in query:
-            return self.knowledge_base["how does optimization work"]
-        if "viva" in query or "exam" in query:
-            return self.knowledge_base["viva help"]
+        # Keyword-based heuristics for KB
+        if "fatigue" in query: return self.knowledge_base["what is fatigue score"]
+        if "attrition" in query or "leave" in query: return self.knowledge_base["how to reduce attrition"]
+        if "model" in query or "ai" in query or "algorithm" in query: return self.knowledge_base["what is random forest"]
+        if "viva" in query or "exam" in query: return self.knowledge_base["viva help"]
             
-        return "I'm not sure about that specific query. You can ask me about 'Attendance', 'Today's Roster', 'PDF Export', or 'Viva Preparation'!"
+        return "Bello! I'm not sure about that specific query. You can ask me: 'Show today attendance', 'Give me roster plan', or 'Convert to PDF'. I'm here to help!"
 
 def render_chat_interface(df=None):
     import streamlit as st
