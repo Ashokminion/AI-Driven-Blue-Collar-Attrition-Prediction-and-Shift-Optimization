@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShiftSync AI | Fatigue-Aware Shift Optimization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <canvas id="star-canvas"></canvas>
+
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-text">
+                <h1>ShiftSync</h1>
+                <span>AI ENTERPRISE</span>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#results">Results</a></li>
+            <li><a href="#insights">Insights</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="wave-line"></div>
+        <h1 class="hero-title">Shift Optimization <br> System</h1>
+        <p class="hero-subtitle">
+            Revolutionizing Blue-Collar Workforce Management with Intelligent Scheduling,
+            Predictive Analytics & AI-Powered Decision Support.
+        </p>
+        <div class="hero-btns">
+            <a href="#about" class="btn btn-primary">
+                Explore Project <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="#architecture" class="btn btn-secondary">
+                Technical View
+            </a>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-value" data-target="92" data-suffix="%">92%</div>
+            <div class="stat-label">Model Accuracy</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" data-target="5000" data-suffix="+">5000+</div>
+            <div class="stat-label">Workers Analyzed</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" data-target="35" data-suffix="%">35%</div>
+            <div class="stat-label">Attrition Reduction</div>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="section-container glass-card">
+            <span class="stat-label" style="color: var(--accent); display: block; margin-bottom: 20px;">The
+                Problem</span>
+            <h2 style="font-size: 3rem; margin-bottom: 30px;">Countering Industry Burnout</h2>
+            <div class="problem-grid">
+                <div class="p-card">
+                    <i class="fas fa-battery-half p-icon"></i>
+                    <h3>Fatigue Analytics</h3>
+                    <p>Real-time monitoring using advanced ML algorithms to detect worker exhaustion before it impacts
+                        safety.</p>
+                </div>
+                <div class="p-card">
+                    <i class="fas fa-user-shield p-icon"></i>
+                    <h3>Attrition Risk</h3>
+                    <p>Proprietary prediction models that flag high-risk turnover scenarios with 92% historical
+                        accuracy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="section-container">
+            <h2 style="font-size: 3rem; text-align: center; margin-bottom: 50px;">Core Features</h2>
+            <div class="features-grid">
+                <div class="f-card">
+                    <i class="fas fa-user-clock p-icon"></i>
+                    <h3>Dynamic Age Scaling</h3>
+                    <p>Parameters adjusted for workers aged 18-60.</p>
+                </div>
+                <div class="f-card highlight">
+                    <h3 style="color:#fff">Compensation Analysis</h3>
+                    <p style="color:rgba(255,255,255,0.8)">Intelligent correlation between pay scales and retention
+                        rates.</p>
+                </div>
+                <div class="f-card">
+                    <i class="fas fa-hourglass-half p-icon"></i>
+                    <h3>Overtime Guard</h3>
+                    <p>Prevents excess hours (0-40hr/wk caps).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture">
+        <div class="section-container">
+            <h2 style="font-size: 3rem; text-align: center; margin-bottom: 20px;">Model Architecture</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 60px;">Random Forest Classifier
+                with Advanced Feature Engineering</p>
+            <div class="arch-flow">
+                <div class="arch-node">
+                    <i class="fas fa-database fa-2x"></i>
+                    <p>Input Data</p>
+                </div>
+                <div class="arch-line"></div>
+                <div class="arch-node">
+                    <i class="fas fa-tools fa-2x"></i>
+                    <p>Preprocessing</p>
+                </div>
+                <div class="arch-line"></div>
+                <div class="arch-node">
+                    <i class="fas fa-tree fa-2x"></i>
+                    <p>RF Model</p>
+                </div>
+                <div class="arch-line"></div>
+                <div class="arch-node">
+                    <i class="fas fa-clipboard-check fa-2x"></i>
+                    <p>Risk Class</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="results">
+        <div class="section-container">
+            <h2 style="font-size: 3rem; text-align: center; margin-bottom: 50px;">Performance Results</h2>
+            <div class="glass-card">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div>
+                        <canvas id="modelComparisonChart"></canvas>
+                    </div>
+                    <div class="results-table">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--accent); color: var(--accent);">
+                                    <th style="padding: 15px;">Model</th>
+                                    <th>Accuracy</th>
+                                    <th>F1-Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--glass-border);">
+                                    <td style="padding: 15px;">Random Forest</td>
+                                    <td>92.4%</td>
+                                    <td>0.91</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--glass-border);">
+                                    <td style="padding: 15px;">XGBoost</td>
+                                    <td>91.8%</td>
+                                    <td>0.90</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 15px;">Decision Tree</td>
+                                    <td>87.5%</td>
+                                    <td>0.86</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="insights">
+        <div class="section-container">
+            <h2 style="font-size: 3rem; text-align: center; margin-bottom: 50px;">AI Insights</h2>
+            <div class="problem-grid">
+                <div class="glass-card" style="padding: 30px;">
+                    <h3 style="margin-bottom: 20px; color: var(--accent);">Feature Importance</h3>
+                    <canvas id="featureImportanceChart"></canvas>
+                </div>
+                <div class="glass-card" style="padding: 30px;">
+                    <h3 style="margin-bottom: 20px; color: var(--accent);">Risk Distribution</h3>
+                    <canvas id="riskDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-container glass-card" style="text-align: center;">
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">Get Started with ShiftSync</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 40px;">Ready to optimize your workforce and reduce
+                attrition?</p>
+            <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 40px;">
+                <div class="p-card" style="min-width: 250px;">
+                    <i class="fas fa-envelope p-icon"></i>
+                    <h3>Email Us</h3>
+                    <p>contact@shiftsync.ai</p>
+                </div>
+                <div class="p-card" style="min-width: 250px;">
+                    <i class="fas fa-map-marker-alt p-icon"></i>
+                    <h3>Location</h3>
+                    <p>Chennai, India</p>
+                </div>
+            </div>
+            <form id="contactForm"
+                style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" placeholder="Name"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; border-radius: 10px; color: #fff;">
+                <input type="email" placeholder="Email"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; border-radius: 10px; color: #fff;">
+                <textarea placeholder="Message" rows="4"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; border-radius: 10px; color: #fff;"></textarea>
+                <button type="submit" class="btn btn-primary" style="justify-content: center;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="padding: 50px; text-align: center; border-top: 1px solid var(--glass-border);">
+
+        <p style="color: var(--text-secondary)">© 2026 ShiftSync AI Enterprise. Built for Excellence.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

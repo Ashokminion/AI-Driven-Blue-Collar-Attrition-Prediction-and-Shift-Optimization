@@ -1,0 +1,84 @@
+import sqlite3
+import pandas as pd
+import os
+from datetime import datetime
+
+class DatabaseManager:
+    def __init__(self, db_path="data/shiftsync.db"):
+        self.db_path = db_path
+        os.makedirs(os.path.dirname(db_path), exist_ok=True)
+        self.init_db()
+
+    def init_db(self):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        
+        # User Table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE,
+                password TEXT,
+                role TEXT
+            )
+        ''')
+        
+        # Employee Data Table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS employees (
+                Employee_ID TEXT PRIMARY KEY,
+                Age INTEGER,
+                Gender TEXT,
+                Department TEXT,
+                Shift_Type TEXT,
+                Daily_Wages INTEGER,
+                Overtime_Hours INTEGER,
+                Distance_km INTEGER,
+                Years_of_Service INTEGER,
+                Last_Month_Leave INTEGER,
+                Satisfaction INTEGER,
+                Fatigue_Score REAL,
+                OT_Trend TEXT,
+                Leave_Trend TEXT,
+                Attrition TEXT,
+                last_updated TIMESTAMP
+            )
+        ''')
+        
+        # Insert default admin if not exists
+        cursor.execute("SELECT * FROM users WHERE username = 'admin'")
+        if not cursor.fetchone():
+            cursor.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", 
+                           ('admin', 'admin123', 'Manager'))
+        
+        conn.commit()
+        conn.close()
+
+    def save_employees(self, df):
+        conn = sqlite3.connect(self.db_path)
+        df['last_updated'] = datetime.now()
+        # Use append to allow merging of multiple uploads
+        df.to_sql('employees', conn, if_exists='append', index=False, method='multi')
+        conn.close()
+
+    def clear_employees(self):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM employees")
+        cursor.execute("DELETE FROM predictions")
+        conn.commit()
+        conn.close()
+
+    def get_employees(self):
+        conn = sqlite3.connect(self.db_path)
+        df = pd.read_sql("SELECT * FROM employees", conn)
+        conn.close()
+        return df
+
+    def verify_user(self, username, password):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT role FROM users WHERE username = ? AND password = ?", (username, password))
+        result = cursor.fetchone()
+        conn.close()
+        return result[0] if result else None
