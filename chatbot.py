@@ -9,7 +9,7 @@ class ShiftSyncBot:
             "what is smote": "SMOTE (Synthetic Minority Over-sampling Technique) is used to balance the dataset. In HR data, 'Attrition' is often a minority, so SMOTE creates synthetic samples to make the model training fair.",
             "how does optimization work": "The optimizer identifies employees with Fatigue Scores > 75 or Attrition Probabilities > 0.4 and recommends shift rotations or overtime caps to prevent burnout.",
             "viva help": "For your Viva: Focus on 'Feature Engineering' (Fatigue Score), 'Data Imbalance' (SMOTE), and 'Explainable AI' (Feature Importance charts). These are the most important technical aspects.",
-            "who are you": "I am ShiftSync AI, your autonomous workforce intelligence assistant. I help you optimize blue-collar shift schedules and predict attrition risk."
+            "who are you": "I am Minion, your autonomous workforce intelligence assistant. I help you optimize blue-collar shift schedules and predict attrition risk."
         }
 
     def get_response(self, query, df=None):
@@ -20,14 +20,14 @@ class ShiftSyncBot:
             if "attendance" in query or "many employees" in query or "total" in query:
                 count = len(df)
                 depts = df['Department'].nunique()
-                return f"📋 **Workforce Status**: There are currently **{count}** employees registered in the system across **{depts}** departments."
+                return f"📋 **Minion's Report**: There are currently **{count}** employees registered in the system across **{depts}** departments."
 
             if "roster" in query or "plan" in query or "optimized" in query:
                 high_fatigue = len(df[df['Fatigue_Score'] > 75])
-                return f"📅 **Roster Summary**: I have processed the optimization. **{high_fatigue}** employees are flagged for fatigue-induced shift rotation. You can view the full detailed list in the **Optimization** tab."
+                return f"📅 **Minion's Roster Summary**: I have processed the optimization. **{high_fatigue}** employees are flagged for fatigue-induced shift rotation. You can view the full detailed list in the **Optimization** tab."
 
             if "pdf" in query or "excel" in query or "convert" in query or "export" in query:
-                return "📄 **Export Engine**: I've prepared the data for export. You can find the **'Download PDF Report'** button in the **Overview** or **Optimization** section to get the official document."
+                return "📄 **Minion's Export Engine**: I've prepared the data for export. You can find the **'Download PDF Report'** button in the **Overview** or **Optimization** section to get the official document."
 
         # 2. Knowledge Base Queries
         for key in self.knowledge_base:

@@ -93,7 +93,7 @@ def dashboard_view():
     st.sidebar.title("🛡️ ShiftSync AI")
     st.sidebar.markdown(f"**Role:** {st.session_state.user_role}")
     st.sidebar.write("---")
-    menu = st.sidebar.selectbox("Navigation", ["Overview", "Risk Analytics", "Optimization", "Data Management", "AI Expert Chat"])
+    menu = st.sidebar.selectbox("Navigation", ["Overview", "Risk Analytics", "Optimization", "Data Management", "Ask Minion"])
     if st.sidebar.button("Logout"): Auth.logout()
 
     df = db.get_employees()
@@ -189,9 +189,9 @@ def dashboard_view():
         st.write(f"Total Rows: **{len(df)}**")
         st.dataframe(df.head(50), use_container_width=True)
 
-    elif menu == "AI Expert Chat":
-        st.title("🤖 ShiftSync AI Assistant")
-        st.info("Ask me about ATTRITION, FATIGUE, ML MODELS, or VIVA TIPS!")
+    elif menu == "Ask Minion":
+        st.title("🤖 Ask Minion")
+        st.info("I am your project assistant. Ask me about ATTRITION, FATIGUE, ML MODELS, or VIVA TIPS!")
         from chatbot import render_chat_interface
         render_chat_interface(df)
 
