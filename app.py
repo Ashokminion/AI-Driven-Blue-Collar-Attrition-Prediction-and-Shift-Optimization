@@ -193,7 +193,7 @@ def dashboard_view():
         st.title("🤖 ShiftSync AI Assistant")
         st.info("Ask me about ATTRITION, FATIGUE, ML MODELS, or VIVA TIPS!")
         from chatbot import render_chat_interface
-        render_chat_interface()
+        render_chat_interface(df)
 
 # --- ROUTER ---
 if not Auth.is_authenticated():

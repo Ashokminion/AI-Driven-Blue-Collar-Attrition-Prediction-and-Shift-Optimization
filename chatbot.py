@@ -12,10 +12,24 @@ class ShiftSyncBot:
             "who are you": "I am ShiftSync AI, your autonomous workforce intelligence assistant. I help you optimize blue-collar shift schedules and predict attrition risk."
         }
 
-    def get_response(self, query):
+    def get_response(self, query, df=None):
         query = query.lower().strip()
         
-        # Exact match
+        # 1. Functional Queries (Working with DF)
+        if df is not None and not df.empty:
+            if "attendance" in query or "many employees" in query or "total" in query:
+                count = len(df)
+                depts = df['Department'].nunique()
+                return f"📋 **Workforce Status**: There are currently **{count}** employees registered in the system across **{depts}** departments."
+
+            if "roster" in query or "plan" in query or "optimized" in query:
+                high_fatigue = len(df[df['Fatigue_Score'] > 75])
+                return f"📅 **Roster Summary**: I have processed the optimization. **{high_fatigue}** employees are flagged for fatigue-induced shift rotation. You can view the full detailed list in the **Optimization** tab."
+
+            if "pdf" in query or "excel" in query or "convert" in query or "export" in query:
+                return "📄 **Export Engine**: I've prepared the data for export. You can find the **'Download PDF Report'** button in the **Overview** or **Optimization** section to get the official document."
+
+        # 2. Knowledge Base Queries
         for key in self.knowledge_base:
             if key in query:
                 return self.knowledge_base[key]
@@ -32,9 +46,9 @@ class ShiftSyncBot:
         if "viva" in query or "exam" in query:
             return self.knowledge_base["viva help"]
             
-        return "I'm not sure about that specific query. You can ask me about 'Fatigue Scores', 'Attrition Prediction', 'Optimization Rules', or 'Machine Learning' details for your Viva!"
+        return "I'm not sure about that specific query. You can ask me about 'Attendance', 'Today's Roster', 'PDF Export', or 'Viva Preparation'!"
 
-def render_chat_interface():
+def render_chat_interface(df=None):
     import streamlit as st
     
     if "messages" not in st.session_state:
@@ -46,7 +60,7 @@ def render_chat_interface():
             st.markdown(message["content"])
 
     # Chat input
-    if prompt := st.chat_input("Ask ShiftSync AI anything..."):
+    if prompt := st.chat_input("Ask ShiftSync AI assistant..."):
         # Add user message
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -54,7 +68,7 @@ def render_chat_interface():
 
         # Generate bot response
         bot = ShiftSyncBot()
-        response = bot.get_response(prompt)
+        response = bot.get_response(prompt, df)
         
         # Add bot message
         st.session_state.messages.append({"role": "assistant", "content": response})
