@@ -68,13 +68,21 @@ class Database:
         return sqlite3.connect(self.db_path)
 
     def save_employees(self, df):
-        conn = self.get_connection()
+        conn = sqlite3.connect(self.db_path)
         df['last_updated'] = datetime.now()
-        # Use append instead of replace to allow multiple uploads
-        # We try to append, if there's a PK collision we could catch it, 
-        # but for simplicity we'll assume new data is being added.
-        # To truly upsert, we would need a more complex SQL command.
-        df.to_sql('employees', conn, if_exists='append', index=False, method='multi')
+        
+        # Define schema columns to prevent schema mismatch errors
+        schema_cols = ['Employee_ID', 'Age', 'Gender', 'Department', 'Shift_Type', 
+                       'Daily_Wages', 'Overtime_Hours', 'Distance_km', 'Years_of_Service',
+                       'Last_Month_Leave', 'Satisfaction', 'Fatigue_Score', 'OT_Trend', 
+                       'Leave_Trend', 'last_updated']
+        
+        # Only keep columns that exist in both the dataframe and schema
+        cols_to_save = [c for c in schema_cols if c in df.columns]
+        df_filtered = df[cols_to_save]
+        
+        # Use append to allow merging of multiple uploads
+        df_filtered.to_sql('employees', conn, if_exists='append', index=False, method='multi')
         conn.close()
 
     def clear_employees(self):
